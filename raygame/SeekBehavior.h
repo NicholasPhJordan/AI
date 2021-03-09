@@ -17,6 +17,5 @@ public:
 private:
 	//the agent the bahvior is seeking 
 	Actor* m_target;
-	float m_seekForce;
 };
 

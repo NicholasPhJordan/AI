@@ -36,9 +36,29 @@ public:
     //add given force to total force that is being applied to agent
     void addForce(MathLibrary::Vector2 force);
     void addBehavior(Behavior* behavior);
+
+    template<typename BehaviorType>
+    BehaviorType* getBehavior();
+
 private:
     MathLibrary::Vector2 m_force;
     float m_maxForce;
     std::vector<Behavior*> m_behaviors;
 };
 
+template<typename BehaviorType>
+inline BehaviorType* Agent::getBehavior()
+{
+    //iterate through list of behaviors 
+    for (int i = 0; i < m_behaviors.size(); i++)
+    {
+        //attempt to cast behavior at the current index of given type
+        BehaviorType* behavior = dynamic_cast<BehaviorType*>(m_behaviors[i]);
+
+        //if cast is unsuccessful return behavior found
+        if (behavior)
+            return behavior;
+    }
+    //if no behaviors found to match the type, return nullptr
+    return NULL;
+}

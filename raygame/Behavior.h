@@ -7,4 +7,5 @@ class Behavior
 {
 public:
 	virtual void update(Agent* owner, float deltatime) = 0;
+	virtual void draw() {};
 };
