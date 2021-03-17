@@ -1,34 +1,33 @@
-//#include "WanderBehavior.h"
-//#include "Agent.h"
-//
-//WanderBehavior::WanderBehavior()
-//{
-//	m_wanderForce = 1;
-//	m_forwardDistance = 1;
-//}
-//
-//WanderBehavior::WanderBehavior(float wanderForce, float forwardDistance)
-//{
-//	m_wanderForce = m_wanderForce;
-//	m_forwardDistance = forwardDistance;
-//}
+#include "WanderBehavior.h"
+#include "Agent.h"
+#include "Actor.h"
 
-//MathLibrary::Vector2 WanderBehavior::calculateForce(Agent* owner)
-//{
-//	//calculate current direction and scale it
-//	MathLibrary::Vector2 direction = owner->getVelocity() * m_forwardDistance;
-//	//use random number generator to get a wander angle 
-//	int randomNum = rand() % 500 + 1;
-//	MathLibrary::Vector2 wanderAngle = {randomNum, randomNum};
-//	//add to get displacement which is the wanderforce  
-//	MathLibrary::Vector2 displacement = direction + wanderAngle;
-//
-//	return MathLibrary::Vector2();
-//}
+WanderBehavior::WanderBehavior(float circleDistance, float circleRadius)
+{
+	m_circleDistance = circleDistance;
+	m_circleRadius = circleRadius;
+}
 
-//void WanderBehavior::update(Agent* owner, float deltatime)
-//{
-//	//if owner isn't null, calculate new force and add it to owner
-//	if (owner)
-//		owner->addForce(calculateForce(owner));
-//}
+MathLibrary::Vector2 WanderBehavior::getRandomPosition()
+{
+	int rando = rand() % 760 + 1;
+	int rando2 = rand() % 760 + 1;
+	MathLibrary::Vector2 randPosition = MathLibrary::Vector2(cos(rando), sin(rando2));
+	return randPosition;
+}
+
+MathLibrary::Vector2 WanderBehavior::calculateForce(Agent* owner)
+{
+	MathLibrary::Vector2 facing = owner->getVelocity();
+	facing.getNormalized();
+	MathLibrary::Vector2 circleLocation = facing * m_circleDistance;
+	MathLibrary::Vector2 displacement = getRandomPosition() * m_circleRadius;
+	MathLibrary::Vector2 wanderForce = displacement + circleLocation;
+	return wanderForce;
+}
+
+void WanderBehavior::update(Agent* owner, float deltatime)
+{
+	if (owner)
+		owner->addForce(calculateForce(owner));
+}

@@ -1,8 +1,6 @@
 #include "Agent.h"
 #include "Behavior.h"
 
-Agent::~Agent() {}
-
 Agent::Agent() : Actor()
 {
 	m_force = { 0, 0 };
@@ -36,8 +34,11 @@ void Agent::update(float deltatime)
 	m_force = { 0,0 };
 
 	//call update for each behavior in the list
-	for(int i = 0; i < m_behaviors.size(); i++)
-		m_behaviors[i]->update(this, deltatime);
+	for (int i = 0; i < m_behaviors.size(); i++)
+	{
+		if (m_behaviors[i]->getEnabled())
+			m_behaviors[i]->update(this, deltatime);
+	}
 
 	//updates velocity with the new force
 	setVelocity(getVelocity() + m_force * deltatime);

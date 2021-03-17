@@ -1,5 +1,6 @@
 #include "SeekBehavior.h"
 #include "Agent.h"
+#include "Actor.h"
 
 SeekBehavior::SeekBehavior()
 {
@@ -21,7 +22,8 @@ MathLibrary::Vector2 SeekBehavior::calculateForce(Agent* owner)
 	MathLibrary::Vector2 desiredVelocity = direction * getForceScale();
 	//subtract current velocity by desired velocity to find seekForce
 	MathLibrary::Vector2 steeringForce = desiredVelocity - owner->getVelocity();
-	return MathLibrary::Vector2();
+
+	return steeringForce;
 }
 
 void SeekBehavior::update(Agent* owner, float deltatime)

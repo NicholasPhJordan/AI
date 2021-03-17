@@ -10,7 +10,7 @@ public:
 	virtual float getHealth() { return m_health; }
 	virtual float takeDamage(float damage) { return m_health -= damage; }
 	virtual float getDamage() { return m_damage; }
-	//virtual void 
+	virtual void setDamage(float damage) { m_damage = damage; }
 
 private:
 	float m_health;

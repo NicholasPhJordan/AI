@@ -4,11 +4,9 @@
 
 class Behavior;
 
-class Agent :
-	public Actor
+class Agent :  public Actor
 {
 public:
-    ~Agent();
     Agent();
     /// <param name="x">Position on the x axis</param>
    /// <param name="y">Position on the y axis</param>
@@ -37,6 +35,9 @@ public:
     void addForce(MathLibrary::Vector2 force);
     void addBehavior(Behavior* behavior);
 
+    ///<summary>
+   /// Returns the first behavior that matches the given type. If no behavior matches the type, returns null.
+   ///</summary>
     template<typename BehaviorType>
     BehaviorType* getBehavior();
 
@@ -49,16 +50,16 @@ private:
 template<typename BehaviorType>
 inline BehaviorType* Agent::getBehavior()
 {
-    //iterate through list of behaviors 
+    //Iiterate through list of behaviors
     for (int i = 0; i < m_behaviors.size(); i++)
     {
-        //attempt to cast behavior at the current index of given type
+        //Attempt to cast behavior at current index as the given type
         BehaviorType* behavior = dynamic_cast<BehaviorType*>(m_behaviors[i]);
 
-        //if cast is unsuccessful return behavior found
+        //If the cast is successful return the behavior that was found
         if (behavior)
             return behavior;
     }
-    //if no behaviors found to match the type, return nullptr
-    return NULL;
+    //If no behaviors were found to match the type, return nullptr
+    return nullptr;
 }
