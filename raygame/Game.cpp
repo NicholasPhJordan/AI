@@ -6,6 +6,7 @@
 #include "DecisionBehavior.h"
 #include "PursueDecision.h"
 #include "ComplexEnemy.h"
+#include "Graph.h"
 
 bool Game::m_gameOver = false;
 Scene** Game::m_scenes = new Scene*;
@@ -34,6 +35,7 @@ void Game::start()
 	m_camera->target = { (float)m_screenWidth / 2, (float)m_screenHeight / 2 };
 	m_camera->zoom = 1;
 
+	///// STEERING BEHAVIOR SCENE /////
 	//initialize agents
 	Player* player = new Player(10, 10, 5, "Images/player.png", 1, 10);
 	Enemy* enemy = new Enemy(20, 20, 1, "Images/enemy.png", player, 5, 1, 1);
@@ -43,20 +45,30 @@ void Game::start()
 	WanderBehavior* wander = new WanderBehavior(5, 5);
 	enemy->addBehavior(wander);
 
-	//initialize the scene
 	Scene* scene = new Scene();
 	scene->addActor(player);
 	scene->addActor(enemy);
+	///// STEERING BEHAVIOR END /////
+
+	///// PATHFINDER BEHAVIOR /////
+
+	Graph* graph = new Graph(10, 10, 10, 1);
+	graph->setWorldPostion({ 2,2 });
+	graph->BFS(2, 2, 3, 5);
+	Scene* pathfinding = new Scene();
+	pathfinding->addActor(graph);
+
+	///// PATHFINDER BEAHVIOR END //////
+
+	//initialize the scene
 	addScene(scene);
+	m_currentSceneIndex = addScene(pathfinding);
 	SetTargetFPS(60);
 }
 
 void Game::update(float deltaTime)
 {
-	for (int i = 0; i < m_sceneCount; i++)
-	{
-		m_scenes[i]->update(deltaTime);
-	}
+	getCurrentScene()->update(deltaTime);
 }
 
 void Game::draw()
@@ -66,10 +78,7 @@ void Game::draw()
 	BeginMode2D(*m_camera);
 	ClearBackground(BLACK);
 
-	for (int i = 0; i < m_sceneCount; i++)
-	{
-		m_scenes[i]->draw();
-	}
+	getCurrentScene()->draw();
 
 	EndMode2D();
 	EndDrawing();
