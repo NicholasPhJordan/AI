@@ -6,6 +6,7 @@ Edge::Edge(Node* node1, Node* node2) : Actor(0, 0, 0, ' ', 0)
 {
 	connectedNode1 = node1;
 	connectedNode2 = node2;
+	gScore;
 }
 
 void Edge::draw()

@@ -24,7 +24,6 @@ bool SimpleEnemy::cheackTargetInSight()
 void SimpleEnemy::onCollision(Actor* other)
 {
 	//Actor* player;
-	//Actor* player;
 	//check to see if enemy ran into player
 	//if (other == player)
 	//{

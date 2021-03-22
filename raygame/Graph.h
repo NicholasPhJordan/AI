@@ -15,6 +15,8 @@ public:
 
 	void Dijkstrap(int startX, int startY, int goalX, int goalY);
 
+	void AStar(int startX, int startY, int goalX, int goalY);
+
 	Node* getNode(int xPos, int yPos);
 
 private:
