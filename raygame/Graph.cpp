@@ -154,7 +154,7 @@ void Graph::Dijkstrap(int startX, int startY, int goalX, int goalY)
 		//Pop the first item off the open list
 		open.pop_front();
 		//Add the first item to the closed list
-		
+		close.push_front(start);
 
 		//Loop through all of the edges for the iterator
 		for (int i = 0; i < currentNode->edges.size(); i++)
@@ -177,8 +177,12 @@ void Graph::Dijkstrap(int startX, int startY, int goalX, int goalY)
 			}
 
 			//Check if node at the end of the edge is in the closed list
-
-				//Create an int and set it to be the g score of the iterator plus the cost of the edge
+			for (int i = 0; i < close.size(); i++)
+			{
+				if (currentEdgeEnd == close[i])
+					//Create an int and set it to be the g score of the iterator plus the cost of the edge
+					int gEnd = currentNode.getGScore
+			}
 
 
 				//Check if the node at the end ofthe edge is in the open list

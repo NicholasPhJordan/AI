@@ -12,7 +12,7 @@ public:
 	float cost;
 	void draw() override;
 	void update(float deltatime) override;
-	float gScore = rand() % 10 + 1;
+	float gScore = 1.0f;
 	float getGScore() { return gScore; }
 };
 
